@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "421fd0eb-c85a-4274-9ff4-c3ab1a29acc0",
+		"name": "(WebService/API) - NEON",
+		"description": "# TESTES NA API DO http://swapi.co/api/films/\n\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Consultando filmes",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4f546eb5-ba53-44d5-bf43-6392da4ee4ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4c01167-e73f-44f6-be0c-6bfe4e69ca2f",
+						"exec": [
+							"pm.test(\"validar se o status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validar os titulos\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"A New Hope\");",
+							"});",
+							"",
+							"pm.environment.set(\"title\",  JSON.parse(responseBody).title);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://swapi.co/api/films/",
+					"protocol": "http",
+					"host": [
+						"swapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"films",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultando Planetas",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "755f567b-80fe-48ec-9e8a-80db382749a5",
+						"exec": [
+							"var count = pm.variables.get(\"count\")\r",
+							"\r",
+							"count - 2;\r",
+							"\r",
+							"const echoPostRequest = {\r",
+							"  \r",
+							"  url: 'https://swapi.co/api/planets/'+count,\r",
+							"  method: 'GET',\r",
+							"  header: {\r",
+							"        'content-type': 'application/json'\r",
+							"    }\r",
+							"};"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb56fbde-9dc9-4b09-b3a4-3aeb37d9a595",
+						"exec": [
+							"pm.test(\"validar se o status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Armazenar quantidade\", function () {",
+							"    pm.environment.set(\"count\",  JSON.parse(responseBody).count);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swapi.co/api/planets/",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"planets",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
